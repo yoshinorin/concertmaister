@@ -1,4 +1,4 @@
-# [WIP] conzertmaister
+# [WIP] Conzertmaister
 
 Part of CLI for [Qualtet](https://github.com/yoshinorin/qualtet).
 
