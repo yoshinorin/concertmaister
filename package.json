@@ -1,0 +1,23 @@
+{
+  "name": "concertmaister",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "post": "TODO"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yoshinorin/conzertmaister.git"
+  },
+  "author": "yoshinorin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yoshinorin/conzertmaister/issues"
+  },
+  "homepage": "https://github.com/yoshinorin/conzertmaister#readme",
+  "dependencies": {
+    "markdown-it": "12.2.0",
+    "markdown-it-footnote": "3.0.3"
+  }
+}
