@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/yoshinorin/conzertmaister#readme",
   "dependencies": {
+    "hexo-util": "2.5.0",
     "markdown-it": "12.2.0",
     "markdown-it-footnote": "3.0.3"
   }
