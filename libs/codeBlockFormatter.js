@@ -5,11 +5,11 @@ const rBacktick = /^((?:[^\S\r\n]*>){0,3}[^\S\r\n]*)(`{3,}|~{3,})[^\S\r\n]*((?:.
 const rAllOptions = /([^\s]+)\s+(.+?)\s+(https?:\/\/\S+|\/\S+)\s*(.+)?/;
 const rLangCaption = /([^\s]+)\s*(.+)?/;
 
-export default function backtickCodeBlock(data) {
+function format(data) {
   const dataContent = data.rawContent;
 
   if ((!dataContent.includes('```') && !dataContent.includes('~~~'))) {
-    return;
+    return dataContent;
   }
 
   data.rawContent = dataContent.replace(rBacktick, ($0, start, $2, _args, _content, end) => {
@@ -69,3 +69,7 @@ export default function backtickCodeBlock(data) {
   });
   return data.rawContent;
 }
+
+module.exports = {
+  format
+};

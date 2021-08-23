@@ -30,19 +30,6 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-# vercel
-.vercel
-
 # application
 config.js
-
-# images
-# can i use case-insensitive?
-/public/**/*.jpg
-/public/**/*.JPG
-/public/**/*.gif
-/public/**/*.GIF
-/public/**/*.png
-/public/**/*.PNG
-/public/**/*.svg
-/public/**/*.SVG
+data.json
