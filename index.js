@@ -33,7 +33,7 @@ const httpClient = axios.create({
     }
     // TODO: from config
     await wait(500);
-    p.rawContent = md.render(codeBlockFormatter.format(p));
+    p.htmlContent = md.render(codeBlockFormatter.format(p));
 
     httpClient.post('contents', p)
     .then(response => {
