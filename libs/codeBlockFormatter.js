@@ -65,7 +65,11 @@ function format(data) {
         options.firstLine = options.gutter ? _args.split('=')[1] || 1 : 0;
       }
     }
-    return highlight(content, options);
+    return start
+      + '\n'
+      + highlight(content, options)
+      + '\n'
+      + end;
   });
   return data.rawContent;
 }
