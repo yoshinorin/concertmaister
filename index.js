@@ -11,17 +11,30 @@ const md = require('markdown-it')({
   quotes: '“”‘’',
 }).use(require('markdown-it-footnote'));
 const codeBlockFormatter = require('./libs/codeBlockFormatter');
+const { getCredential, getAuthorId, getJwt } = require('./libs/auth');
+
+// TODO: from config
+const httpClientWithNonAuth = axios.create({
+  baseURL: 'http://localhost:9001/',
+  headers: {
+    'Content-Type': 'application/json',
+  }
+});
+
+const authorName = process.argv[2]
+const password = getCredential(authorName)
+const author = getAuthorId(httpClientWithNonAuth, authorName)
+const jwt = getJwt(httpClientWithNonAuth, author, password)
 
 const posts = JSON.parse(fs.readFileSync('./data.json', 'utf8')); // TODO: from config or pass from hexo generate
 const wait = (ms) => new Promise(r => setTimeout(r, ms)); // TODO: from config
 const maxCnt = 100; // TODO: from config or delete
 
-// TODO: from config
-const httpClient = axios.create({
+const httpClientWithAuth = axios.create({
   baseURL: 'http://localhost:9001/',
   headers: {
     'Content-Type': 'application/json',
-    //'Authorization': `Bearer TODO`
+    'Authorization': `${jwt}`
   }
 });
 
@@ -35,7 +48,7 @@ const httpClient = axios.create({
     await wait(500);
     p.htmlContent = md.render(codeBlockFormatter.format(p));
 
-    httpClient.post('contents', p)
+    httpClientWithAuth.post('contents', p)
     .then(response => {
       console.log(response.data);
     })
