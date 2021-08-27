@@ -23,12 +23,13 @@ async function getJwt(httpClient, authorId, password) {
   const a = await authorId
   const p = await password
 
-  httpClient.post('token', `{
+  return httpClient.post('token', `{
     "authorId": "${a.id}",
     "password": "${p}"
   }`)
   .then(response => {
     console.log(response.data);
+    return response.data.token
   })
   .catch(error => {
     console.log(error.response.status);
