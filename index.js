@@ -24,21 +24,22 @@ const httpClientWithNonAuth = axios.create({
 const authorName = process.argv[2]
 const password = getCredential(authorName)
 const author = getAuthorId(httpClientWithNonAuth, authorName)
-const jwt = getJwt(httpClientWithNonAuth, author, password)
 
 const posts = JSON.parse(fs.readFileSync('./data.json', 'utf8')); // TODO: from config or pass from hexo generate
 const wait = (ms) => new Promise(r => setTimeout(r, ms)); // TODO: from config
 const maxCnt = 100; // TODO: from config or delete
 
-const httpClientWithAuth = axios.create({
-  baseURL: 'http://localhost:9001/',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `${jwt}`
-  }
-});
-
 (async () => {
+  const token = await getJwt(httpClientWithNonAuth, author, password)
+  console.log(token)
+  const httpClientWithAuth = axios.create({
+    baseURL: 'http://localhost:9001/',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    }
+  });
+
   let c = 1;
   for (let p of posts) {
     if (c > maxCnt) {
@@ -48,13 +49,19 @@ const httpClientWithAuth = axios.create({
     await wait(500);
     p.htmlContent = md.render(codeBlockFormatter.format(p));
 
-    httpClientWithAuth.post('contents', p)
+    httpClientWithAuth.post(
+      'contents',
+      p
+    )
     .then(response => {
       console.log(response.data);
     })
     .catch(error => {
       console.log(p.url);
-      console.log(error);
+      console.log(error.response.status);
+      console.log(error.response.statusText);
+      console.log(error.response.headers);
+      console.log(error.response.data);
       exit(1);
     });
     c++;
