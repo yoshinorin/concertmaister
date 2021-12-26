@@ -47,6 +47,7 @@ const maxCnt = 100; // TODO: from config or delete
     }
     // TODO: from config
     await wait(500);
+    // TODO: remove hexo tag (`{% xxxxx %}`) before render
     p.htmlContent = md.render(codeBlockFormatter.format(p));
 
     httpClientWithAuth.post(
